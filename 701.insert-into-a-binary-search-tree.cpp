@@ -53,7 +53,7 @@ public:
                 }
             }
         }
-        return root;
+        return root; // return the root of the tree
     }
 };
 // @lc code=end
