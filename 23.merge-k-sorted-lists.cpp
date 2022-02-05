@@ -1,0 +1,49 @@
+/*
+ * @lc app=leetcode id=23 lang=cpp
+ *
+ * [23] Merge k Sorted Lists
+ */
+
+// @lc code=start
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution
+{
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists)
+    {
+        int k = lists.size();
+        if (k == 0)
+            return NULL;
+        vector<pair<int, ListNode *>> arr;
+        for (int i = 0; i < k; i++)
+        {
+            ListNode *curr = lists[i];
+            while (curr != NULL)
+            {
+                arr.push_back({curr->val, curr});
+                curr = curr->next;
+            }
+        }
+        if (arr.size() == 0)
+        {
+            return NULL;
+        }
+        sort(arr.begin(), arr.end());
+        for (int i = 0; i < arr.size() - 1; i++)
+        {
+            arr[i].second->next = arr[i + 1].second;
+        }
+        arr[arr.size() - 1].second->next = NULL;
+        return arr[0].second;
+    }
+};
+// @lc code=end
