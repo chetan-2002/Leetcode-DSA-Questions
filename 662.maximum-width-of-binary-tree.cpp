@@ -19,6 +19,7 @@
 class Solution
 {
 public:
+    
     int widthOfBinaryTree(TreeNode *root)
     {
         if (root == NULL)
@@ -28,38 +29,35 @@ public:
 
         queue<pair<TreeNode *, int>> q;
         q.push({root, 0});
-        int ans;
+        int ans = 1;
+        vector<int>vec;
         while (!q.empty())
         {
-            ans =INT_MIN;
+            ans = INT_MIN;
             int size = q.size();
-            int first, last;
+            int first = q.front().second, last = q.back().second;
+            // cout<<first << " "<<last << " ";
+            ans  =max(ans, last - first + 1);
+            // vec.push_back(ans);
+            // cout<<ans<<endl;
             for (int i = 0; i < size; i++)
             {
                 auto front = q.front();
                 q.pop();
                 TreeNode *curr = front.first;
                 int curr_idx = front.second;
-                if (i == 0)
-                {
-                    first = curr_idx;
-                }
-                if (i == size - 1)
-                {
-                    last = curr_idx;
-                }
+
                 if (curr->left != NULL)
                 {
-                    q.push({curr->left, (curr_idx * 2 )+ 1});
+                    q.push({curr->left, (long long)curr_idx * 2 + 1});
                 }
                 if (curr->right != NULL)
                 {
-                    q.push({curr->right, (curr_idx * 2) + 2});
+                    q.push({curr->right, (long long)curr_idx *2 + 2});
                 }
-                ans = max(ans, last - first + 1);
             }
-            
         }
+        // return *max_element(vec.begin(), vec.end());
         return ans;
     }
 };
